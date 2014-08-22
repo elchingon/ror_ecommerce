@@ -10,7 +10,7 @@ FactoryGirl.define do
 
   factory :admin_user, parent: :user do
     after(:create) do |u|
-      u.roles = [Role.find_by_name(Role::ADMIN)]
+      u.roles = [create(:admin_role)]
     end
   end
 
@@ -19,7 +19,7 @@ FactoryGirl.define do
     #  [Role.find_by_name(Role::SUPER_ADMIN)]
     #}
     after(:create) do |u|
-      u.roles = [Role.find_by_name(Role::SUPER_ADMIN)]
+      u.roles = [create(:super_admin_role)]
     end
   end
 end

@@ -8,13 +8,13 @@ describe ShippingRate, 'instance methods' do
   context ".individual?" do
     # shipping_rate_type_id == ShippingRateType::INDIVIDUAL_ID
     it "should return true" do
-      ship_rate_type = ShippingRateType.find_by_name('Individual')
+      ship_rate_type = create(:shipping_rate_type, id: ShippingRateType::INDIVIDUAL_ID, name: 'Individual')
       @shipping_rate.shipping_rate_type = ship_rate_type
       expect(@shipping_rate.individual?).to be true
     end
 
     it "should return true" do
-      ship_rate_type = ShippingRateType.find_by_name('Order')
+      ship_rate_type = create(:shipping_rate_type, name: 'Order')
       @shipping_rate.shipping_rate_type = ship_rate_type
       expect(@shipping_rate.individual?).to be false
     end
@@ -23,7 +23,7 @@ describe ShippingRate, 'instance methods' do
   context ".name" do
     #[shipping_method.name, shipping_method.shipping_zone.name, sub_name].join(', ')
     it "should return the name" do
-      ship_rate_type = ShippingRateType.find_by_name('Individual')
+      ship_rate_type = create(:shipping_rate_type, name: 'Individual')
       @shipping_rate.shipping_rate_type = ship_rate_type
       shipping_method = create(:shipping_method, :name => 'shipname')
       @shipping_rate.shipping_method = shipping_method
@@ -34,7 +34,7 @@ describe ShippingRate, 'instance methods' do
   context ".sub_name" do
     # '(' + [shipping_rate_type.name, rate ].join(' - ') + ')'
     it "should return the sub_name" do
-      ship_rate_type = ShippingRateType.find_by_name('Individual')
+      ship_rate_type = create(:shipping_rate_type, name: 'Individual')
       @shipping_rate.shipping_rate_type = ship_rate_type
       @shipping_rate.sub_name.should == '(Individual - 5.5)'
     end

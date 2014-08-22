@@ -16,7 +16,7 @@ end
 describe Address, "methods" do
   before(:each) do
     User.any_instance.stubs(:start_store_credits).returns(true)  ## simply speed up tests, no reason to have store_credit object
-    state = State.find_by_abbreviation('CA')
+    state = create(:state, abbreviation: 'CA')
     @user = FactoryGirl.create(:user)
     @address = @user.addresses.new(:first_name => 'Perez',
                           :last_name  => 'Hilton',
@@ -66,7 +66,6 @@ describe Address, "methods" do
       cc_params[:city].should    == 'Fredville'
       cc_params[:state].should   == 'CA'
       cc_params[:zip].should     == '13156'
-      cc_params[:country].should == 'US'
 
 
     end
@@ -98,19 +97,18 @@ describe Address, "methods" do
   context ".shipping_method_ids" do
     it 'should be the state\'s shipping methods' do
       Settings.require_state_in_address = true
-      shipping_zone = ShippingZone.find(1)
+      shipping_zone = create(:shipping_zone)
       shipping_zone.stubs(:shipping_method_ids).returns([2,4])
-      state = State.first
+      state = create(:state)
       state.stubs(:shipping_zone).returns(shipping_zone)
       address = FactoryGirl.create(:address, :state => state)
       address.shipping_method_ids.should == [2,4]
     end
     it 'should be the countries\'s shipping methods' do
-      @finland = Country.find(67)
-      @finland.shipping_zone_id = 2
-      @finland.save
+      @finland = create(:country, shipping_zone_id: 2)
+
       Settings.stubs(:require_state_in_address).returns(false)# = true
-      shipping_zone = ShippingZone.find(1)
+      shipping_zone = create(:shipping_zone)
       shipping_zone.stubs(:shipping_method_ids).returns([2,3])
       @finland.stubs(:shipping_zone).returns(shipping_zone)
       address = FactoryGirl.create(:address, :country => @finland, :state => nil)

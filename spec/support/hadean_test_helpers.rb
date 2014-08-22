@@ -5,15 +5,16 @@ module Hadean
       @uusseerr = FactoryGirl.build(:user, args)
       @uusseerr.stubs(:set_referral_registered_at).returns(false)
       @uusseerr.save
-      @uusseerr.stubs(:roles).returns([Role.find_by_name(Role::ADMIN)])
+      @uusseerr.stubs(:roles).returns([FactoryGirl.build(:role, name: 'administrator')])
       @uusseerr
     end
 
     def create_real_admin_user(args = {})
+      admin_role = FactoryGirl.build(:role, name: 'administrator')
       @uusseerr = FactoryGirl.build(:user, args)
       @uusseerr.stubs(:set_referral_registered_at).returns(false)
       @uusseerr.save
-      @uusseerr.role_ids = [Role.find_by_name(Role::ADMIN).id]
+      @uusseerr.role_ids = [admin_role.id]
       @uusseerr.save
       @uusseerr
     end
@@ -22,7 +23,7 @@ module Hadean
       @uusseerr.stubs(:set_referral_registered_at).returns(false)
       #@uusseerr.stubs(:admin?).returns(true)
       #@uusseerr.stubs(:super_admin?).returns(false)
-      @uusseerr.stubs(:roles).returns([Role.find_by_name(Role::SUPER_ADMIN)])
+      @uusseerr.stubs(:roles).returns([FactoryGirl.create(:role, name: 'super_administrator')])
       @uusseerr.save
       @uusseerr
     end

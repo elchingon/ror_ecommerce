@@ -169,6 +169,7 @@ describe User, "instance methods" do
 
   context ".sanitize_data" do
     it "should  sanitize data" do
+      create(:account)
       @user.email           = ' bad@email.com '
       @user.first_name      = ' bAd NamE '
       @user.last_name       = ' lastnamE '

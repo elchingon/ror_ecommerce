@@ -25,6 +25,7 @@ end
 
 describe "Admin::Overviews" do
   describe "GET /admin_overviews" do
+    let!(:role) { create(:role)}
     it "works!" do
       User.any_instance.stubs(:activate!).returns(true)
       visit admin_overviews_path

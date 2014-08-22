@@ -2,13 +2,13 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-# ActiveRecord::Migration.check_pending!
 require "authlogic/test_case"
 require "email_spec"
 require "mocha/setup"
 require "factory_girl_rails"
-#require 'capybara/rspec'
+require 'capybara/rspec'
 
+ActiveRecord::Migration.check_pending!
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}

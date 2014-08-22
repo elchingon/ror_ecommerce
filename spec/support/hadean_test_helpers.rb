@@ -10,7 +10,7 @@ module Hadean
     end
 
     def create_real_admin_user(args = {})
-      admin_role = FactoryGirl.build(:role, name: 'administrator')
+      admin_role = FactoryGirl.create(:role, name: 'administrator')
       @uusseerr = FactoryGirl.build(:user, args)
       @uusseerr.stubs(:set_referral_registered_at).returns(false)
       @uusseerr.save
